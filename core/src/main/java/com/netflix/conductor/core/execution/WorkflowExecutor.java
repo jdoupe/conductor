@@ -37,6 +37,7 @@ import com.netflix.conductor.core.utils.QueueUtils;
 import com.netflix.conductor.dao.MetadataDAO;
 import com.netflix.conductor.dao.QueueDAO;
 import com.netflix.conductor.metrics.Monitors;
+import com.netflix.conductor.service.WorkflowMonitor;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,6 +89,8 @@ public class WorkflowExecutor {
     private int activeWorkerLastPollInSecs;
     public static final String DECIDER_QUEUE = "_deciderQueue";
 
+    private final WorkflowMonitor monitor;
+
     @Inject
     public WorkflowExecutor(
             DeciderService deciderService,
@@ -96,7 +99,8 @@ public class WorkflowExecutor {
             MetadataMapperService metadataMapperService,
             WorkflowStatusListener workflowStatusListener,
             ExecutionDAOFacade executionDAOFacade,
-            Configuration config
+            Configuration config,
+            WorkflowMonitor monitor
     ) {
         this.deciderService = deciderService;
         this.metadataDAO = metadataDAO;
@@ -106,6 +110,7 @@ public class WorkflowExecutor {
         this.executionDAOFacade = executionDAOFacade;
         this.activeWorkerLastPollInSecs = config.getIntProperty("tasks.active.worker.lastpoll", 10);
         this.workflowStatusListener = workflowStatusListener;
+        this.monitor = monitor;
     }
 
     /**

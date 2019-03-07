@@ -16,6 +16,12 @@ dependencies {
 	compileOnly "javax.ws.rs:jsr311-api:${revJsr311Api}"
 	compile "io.swagger:swagger-jaxrs:${revSwagger}"
 
+        compileOnly "javax.servlet:javax.servlet-api:${revServletApi}"
+
+        compile "io.prometheus:simpleclient:0.6.0"
+        compile "io.prometheus:simpleclient_servlet:0.6.0"
+        compile "com.sun.jersey.contribs:jersey-guice:${revJerseyGuice}"
+
 	testCompile "org.eclipse.jetty:jetty-server:${revJetteyServer}"
 	testCompile "org.eclipse.jetty:jetty-servlet:${revJettyServlet}"
 }
